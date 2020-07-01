@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-
+    
     <div class="left-container">
       <!-- 标题 -->
       <title-content></title-content>
@@ -19,7 +19,7 @@
       <!-- 页面菜单 -->
       <menu-list :currentPage='currentPage'></menu-list>
       <!-- 服务次数 -->
-      <num :numTitle='numTitle'></num>
+      <num :numTitle="numTitle"></num>
       <!-- 多级网路 -->
       <div class="svg-container common-border">
         <img
@@ -61,8 +61,8 @@ export default {
     return {
       switchData: false,
       showScale: false,
-      numTitle: '已提供服务次数',
-      currentPage: 0,
+      numTitle: '事件报警次数',
+      currentPage: 1,
     };
   },
   components: {

@@ -1,6 +1,6 @@
 <template>
   <div class="serve-num">
-    <div class="common-title serve-title">已提供服务次数</div>
+    <div class="common-title serve-title">{{numTitle}}</div>
     <div class="num-content">
       <div class="chartNum">
         <div class="box-item">
@@ -21,6 +21,13 @@
 </template>
 <script>
 export default {
+  props: {
+    numTitle: {
+      default: '已提供服务次数',
+      required: true,
+      type: String
+    }
+  },
   data() {
     return {
       orderNum: ["0", "2", ",", "1", "8", "4", ",", "5", "2", "1"],
