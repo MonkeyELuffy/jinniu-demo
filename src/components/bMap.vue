@@ -3,7 +3,17 @@
 </template>
 
 <script>
-import geoJson from "../assets/data/mapData.js";
+import data1 from "../assets/data/data1.js";
+import data2 from "../assets/data/data2.js";
+import data3 from "../assets/data/data3.js";
+import data4 from "../assets/data/data4.js";
+import data5 from "../assets/data/data5.js";
+import data6 from "../assets/data/data6.js";
+import data7 from "../assets/data/data7.js";
+import data8 from "../assets/data/data8.js";
+import data9 from "../assets/data/data9.js";
+import data10 from "../assets/data/data10.js";
+
 export default {
   name: "HelloWorld",
   props: {},
@@ -134,7 +144,7 @@ export default {
       sparkLayer2.setData(sparkData2);
       sparkLayer3.setData(sparkData3);
 
-      var data = geoJson;
+      var data = [...data1, ...data2, ...data3, ...data4, ...data5, ...data6, ...data7, ...data8, ...data9, ...data10];
       var polygons = [];
       var len = data.length;
       for (var i = 0; i < len; i++) {
