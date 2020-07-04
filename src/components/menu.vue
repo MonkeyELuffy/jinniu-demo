@@ -32,10 +32,10 @@ export default {
           value: "智慧治理",
           page: "/Page2"
         },
-        {
-          checked: false,
-          value: "智慧服务"
-        }
+        // {
+        //   checked: false,
+        //   value: "智慧服务"
+        // }
       ]
     };
   },
@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     goPage(item) {
+      this.$emit('switchPage')
       this.$router.push({ path: item.page });
     }
   }
@@ -57,11 +58,12 @@ export default {
 .page-menu {
   border-bottom: 2px solid #eee;
   border-image: linear-gradient(to right, #051322, #fff, #263744) 60 20;
-  padding: 10px 20px;
-  color: #eee;
+  padding: 10px 0px;
+  color: #999;
   font-size: 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  font-weight: 600;
   .menu-item {
     cursor: pointer;
     -moz-user-select: none; /*火狐*/
@@ -69,8 +71,10 @@ export default {
     -ms-user-select: none; /*IE10*/
     -khtml-user-select: none; /*早期浏览器*/
     user-select: none;
+    padding: 0 20px;
     &.checked {
-      color: rgb(104, 133, 202);
+      color: rgb(88, 125, 209);
+      // background-image: linear-gradient(to top, rgba(86, 111, 235, 0.616), rgba(96, 113, 202, 0.178));
     }
   }
 }

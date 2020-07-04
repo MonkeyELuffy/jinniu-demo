@@ -1,7 +1,7 @@
 <template>
   <div class="community-info">
     <div class="common-title">小区信息</div>
-    <div class="community-info-content common-border">
+    <div class="community-info-content">
       <div class="community-item" v-for="(item, index) in communityList" :key="index">
         <div
           class="table-item"
@@ -50,10 +50,12 @@ export default {
 
 <style scoped lang='less'>
 .community-info-content {
+  border: 1px solid #999;
+  border-radius: 2px;
   .community-item {
     display: flex;
     justify-content: space-between;
-    &:nth-child(even) {
+    &:nth-child(odd) {
       background-image: linear-gradient(
         to left,
         rgba(124, 155, 240, 0.288),
@@ -61,7 +63,6 @@ export default {
       );
     }
     .table-item {
-      // display: inline-block;
       font-size: 14px;
       width: 100px;
       text-align: center;

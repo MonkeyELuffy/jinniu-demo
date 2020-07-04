@@ -87,17 +87,19 @@ export default {
 
 <style scoped lang='less'>
 .date-weather {
+  text-align: right;
+  height: 5vh;
   font-size: 16px;
   font-weight: 600;
   float: right;
   padding: 10px 20px;
-  .format-date {
-    padding: 0 10px;
     background-image: linear-gradient(
       to left,
-      rgba(177, 60, 60, 0.555),
-      rgba(177, 60, 60, 0.192)
+      rgba(97, 95, 95, 0.555),
+      rgba(112, 110, 110, 0.027)
     );
+  .format-date {
+    padding: 0 10px;
   }
   .weather {
     display: flex;

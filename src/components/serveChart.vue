@@ -1,5 +1,5 @@
 <template>
-  <div class="serve common-border">
+  <div class="serve">
     <div class="serve-content">
       <div class="title">服务热度</div>
       <div class="charts-container">
@@ -64,11 +64,11 @@ export default {
         legend: {
           orient: "vertical",
           left: 10,
-          top: 10,
+          top: 30,
           height: 260,
           textStyle: {
             color: "#eee",
-            fontSize: 10
+            fontSize: 12
           },
           itemHeight: 12,
           data: [
@@ -115,8 +115,18 @@ export default {
   width: 25vw;
   height: 290px;
   position: relative;
-  .charts-container {
-    margin-top: 50px;
-  }
+      border: 1px solid rgba(153, 153, 153, 0);
+      border-radius: 2px;
+  // .charts-container {
+  //   margin-top: 50px;
+  // }
+}
+
+.echart-content {
+  width: 30vw;
+  height: 35vh;
+  padding-top: 50px;
+  margin-bottom: 50px;
+  background-image: linear-gradient(to right, #3943499f, #39434900);
 }
 </style>

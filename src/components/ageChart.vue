@@ -81,8 +81,15 @@ export default {
 <style scoped lang='less'>
 .age-chart {
   width: 25vw;
-  height: 140px;
+  // height: 140px;
   position: relative;
-  margin-bottom: 30px;
+  // margin-bottom: 40px;
+  // margin-top: 40px;
+}
+.echart-content {
+  width: 30vw;
+  height: 20vh;
+  // margin-top: 10px;
+  background-image: linear-gradient(to right, #3943499f, #39434900);
 }
 </style>

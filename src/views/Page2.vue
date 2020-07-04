@@ -1,91 +1,184 @@
 <template>
-  <div class="container">
-    
+  <div class="container" @click="hiddenAlarm">
     <div class="left-container">
       <!-- 标题 -->
       <title-content></title-content>
-      <!-- 街道信息 -->
-      <street-info :switchData="switchData"></street-info>
-      <!-- 居民画像 -->
-      <div class="people-info">
-        <!-- 年龄分布chart -->
-        <age-chart :switchData="switchData" ref="ageChart"></age-chart>
-        <!-- 服务热度 -->
-        <serve-chart :switchData="switchData" ref="serveChart"></serve-chart>
-      </div>
+
+      <select-content></select-content>
     </div>
 
     <div class="center-container">
       <!-- 页面菜单 -->
-      <menu-list :currentPage='currentPage'></menu-list>
+      <menu-list :currentPage="currentPage"></menu-list>
       <!-- 服务次数 -->
-      <num :numTitle="numTitle"></num>
+      <num :numTitle="numTitle" :numTotal="numTotal"></num>
       <!-- 多级网路 -->
-      <div class="svg-container common-border">
-        <img
-          src="../assets/centerImg_1.png"
-          :class="{'scale': showScale}"
-          class="center-img"
-          @click="scale"
-        />
+      <div class="svg-container_2 common-border">
+        <img src="../assets/centerImg_1.png" class="center-img" />
+        <div
+          class="jinggai-item"
+          v-for="(item, index) in jinggaiList"
+          :key="index"
+          :style="{'left': item.left, 'top': item.top}"
+        >
+          <img src="../assets/jinggai.png" alt class="jinggai" @click.stop="clickJingGai(item)" />
+          <img v-show="item.hasAlarm" src="../assets/alarm.png" alt class="alarm has-annimate" />
+        </div>
+        <div
+          class="monitor-item"
+          v-for="(item, index) in monitorList"
+          :key="index"
+          :style="{'left': item.left, 'top': item.top}"
+        >
+          <img src="../assets/monitor.png" alt class="monitor" :class="{'has-annimate': item.click}" @click.stop="clickMonitor(item)" />
+        </div>
       </div>
-      <!-- 管理人员 -->
-      <leader-content></leader-content>
+      <click-cell ref="clickCell" @handleClickAlarm="handleClickAlarm"></click-cell>
     </div>
 
     <div class="right-container">
       <!-- 天气日期 -->
       <weather></weather>
-      <!-- 生活配套 -->
-      <life-config></life-config>
-      <!-- 小区信息 -->
-      <community-info></community-info>
+      <div class="monitor-list">
+        <monitor :img="monitor1" title="监控画面1" little-title="怡丽佳苑出入口"></monitor>
+        <monitor :img="monitor2" title="监控画面2" little-title="菁蓉湖社区党群服务中心停车场"></monitor>
+      </div>
+      <people ref="people" @handleClickMonitor="handleClickMonitor"></people>
     </div>
   </div>
 </template>
 
 <script>
+import monitor1 from "../assets/monitor1.gif";
+import monitor2 from "../assets/monitor2.gif";
+import gif1 from "../assets/gif1.gif";
+
 import Num from "../components/num.vue";
+import Monitor from "../components/monitor.vue";
 import MenuList from "../components/menu.vue";
-import LifeConfig from "../components/lifeConfig.vue";
-import CommunityInfo from "../components/communityInfo.vue";
-import LeaderContent from "../components/leaderContent.vue";
-import StreetInfo from "../components/streetInfo.vue";
-import AgeChart from "../components/ageChart.vue";
-import ServeChart from "../components/serveChart.vue";
 import TitleContent from "../components/titleContent.vue";
 import Weather from "../components/weather.vue";
+import ClickCell from "../components/clickCell.vue";
+import People from "../components/people.vue";
+import SelectContent from "../components/selectContent.vue";
 export default {
   name: "home",
   data() {
     return {
-      switchData: false,
-      showScale: false,
-      numTitle: '事件报警次数',
+      numTitle: "事件报警次数",
+      numTotal: 3245,
       currentPage: 1,
+      monitor1: gif1,
+      monitor2,
+      jinggaiList: [
+        {
+          left: "20px",
+          top: "20px"
+        },
+        {
+          left: "320px",
+          top: "220px",
+          id: "Alarm_1",
+          hasAlarm: false
+        },
+        {
+          left: "140px",
+          top: "220px"
+        },
+        {
+          left: "130px",
+          top: "80px",
+          id: "Alarm_2",
+          hasAlarm: false
+        },
+        {
+          left: "380px",
+          top: "120px",
+          id: "Alarm_3",
+          hasAlarm: false
+        },
+        {
+          left: "250px",
+          top: "60px"
+        }
+      ],
+      monitorList: [
+        {
+          left: "240px",
+          top: "30px",
+          id: "monitor_2",
+          click: false,
+        },
+        {
+          left: "280px",
+          top: "67px",
+          id: "monitor_1",
+          click: false,
+        },
+        {
+          left: "310px",
+          top: "120px",
+          id: "monitor_3",
+          click: false,
+        }
+      ]
     };
   },
   components: {
     Num,
     MenuList,
-    LifeConfig,
-    CommunityInfo,
-    LeaderContent,
-    StreetInfo,
-    AgeChart,
-    ServeChart,
     TitleContent,
-    Weather
+    Weather,
+    Monitor,
+    ClickCell,
+    People,
+    SelectContent
   },
   mounted() {},
+  beforeDestroy: function() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  },
   methods: {
-    scale() {
-      this.showScale = !this.showScale;
-      this.switchData = !this.switchData;
-      this.$refs.ageChart.handleSwitchData()
-      this.$refs.serveChart.handleSwitchData()
+    handleClickAlarm(item) {
+      this.jinggaiList.map(cur => {
+        cur.hasAlarm = cur.id === item.id;
+        return cur;
+      });
     },
-    backParent() {}
+    clickJingGai(item) {
+      this.jinggaiList.map(cur => {
+        cur.hasAlarm = item.id !== undefined && cur.id === item.id;
+        return cur;
+      });
+      this.$refs.clickCell.chooseItem(item);
+    },
+    handleClickMonitor(item) {
+      this.monitorList.map(cur => {
+        cur.click = cur.id === item.id;
+        return cur;
+      });
+    },
+    clickMonitor(item) {
+      this.monitorList.map(cur => {
+        cur.click = item.id !== undefined && cur.id === item.id;
+        return cur;
+      });
+      this.$refs.people.chooseItem(item);
+    },
+    hiddenAlarm() {
+      this.jinggaiList.map(cur => {
+        cur.hasAlarm = false;
+        return cur;
+      });
+      this.monitorList.map(cur => {
+        cur.click = false;
+        return cur;
+      });
+      this.$refs.people.hiddenMonitor();
+      this.$refs.clickCell.hiddenAlarm();
+    }
   }
 };
 </script>
@@ -117,22 +210,21 @@ export default {
   border: 1px solid #999;
   border-radius: 2px;
 }
+
+.title {
+  position: absolute;
+  left: 10px;
+  top: 20px;
+  color: #eee;
+  padding-left: 10px;
+  border-left: 4px solid #b34038;
+}
+
 .left-container {
   width: 25vw;
-  .people-info {
-    .charts-container {
-      height: 100%;
-    }
-    .title {
-      position: absolute;
-      left: 10px;
-      top: 20px;
-      color: #eee;
-      padding-left: 10px;
-      border-left: 4px solid #b34038;
-    }
-  }
+  display: block;
 }
+
 .center-container {
   width: 45vw;
 }
@@ -140,9 +232,13 @@ export default {
 .right-container {
   width: 25vw;
   color: #eee;
+  padding-bottom: 20px;
+  .monitor-list {
+    margin-top: 10px;
+  }
 }
 
-.svg-container {
+.svg-container_2 {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -150,17 +246,58 @@ export default {
   justify-content: space-around;
   margin: 20px 0 10px;
   overflow: hidden;
+  position: relative;
   .center-img {
     width: 100%;
     transition: all 0.6s;
-    &.scale {
-      transform: scale(3);
-      translate: 0 10px;
+  }
+  .monitor-item {
+    position: absolute;
+    z-index: 1;
+    .monitor {
+      width: 20px;
+      transition: all 0.3s;
+      transform-origin: 50% 50% 0;
+      &.has-annimate {
+        animation: big 1s infinite linear;
+      }
+      @keyframes big {
+        50% {
+          transform: scale(1.8);
+        }
+      }
     }
   }
-}
-.echart-content {
-  width: 30vw;
-  height: 30vh;
+  .jinggai-item {
+    position: absolute;
+    z-index: 1;
+    .jinggai {
+      width: 20px;
+    }
+    .alarm {
+      width: 20px;
+      position: absolute;
+      left: 0px;
+      top: -10px;
+      z-index: 2;
+      transition: all 0.3s;
+      transform-origin: 50% 50% 0;
+      &.has-annimate {
+        animation: jump 1s infinite linear;
+      }
+      @keyframes jump {
+        0% {
+          // top: -10px;
+        }
+        50% {
+          // top: 0px;
+          transform: scale(1.8);
+        }
+        100% {
+          // top: -10px;
+        }
+      }
+    }
+  }
 }
 </style>

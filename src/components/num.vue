@@ -26,17 +26,23 @@ export default {
       default: '已提供服务次数',
       required: true,
       type: String
-    }
+    },
+    numTotal: {
+      default: 0,
+      required: true,
+      type: Number
+    },
   },
   data() {
     return {
-      orderNum: ["0", "2", ",", "1", "8", "4", ",", "5", "2", "1"],
-      num: 2184521
+      orderNum: ["0", "0", ",", "0", "0", "0", ",", "0", "0", "0"],
+      num: 0,
     };
   },
   mounted() {
     this.increaseNumber();
     let self = this;
+    this.num = this.numTotal
     this.timer3 = setInterval(() => {
       self.toOrderNum(self.num++); // 这里输入数字即可调用
     }, 3000);
@@ -82,8 +88,11 @@ export default {
 </script>
 <style scoped lang='less'>
 .serve-num {
+  background-color: rgba(28, 53, 83, 0.418);
+  border-radius: 4px;
   .serve-title {
     padding: 10px 0;
+    font-size: 30px;
   }
   .num-content {
     display: flex;
@@ -135,7 +144,7 @@ export default {
 .number-item {
   width: 11%;
   height: 100%;
-  background: #394349;
+  background: #394349af;
   list-style: none;
   margin-right: 5px;
   color: #eee;

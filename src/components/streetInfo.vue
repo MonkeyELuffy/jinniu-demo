@@ -121,6 +121,9 @@ export default {
 
 <style scoped lang='less'>
 .street-info {
+  background-image: linear-gradient(to right, #3943499f, #39434900);
+  border-radius: 4px;
+  padding: 0 10px;
   .info-content {
     display: flex;
     justify-content: space-between;
@@ -135,31 +138,33 @@ export default {
       border-radius: 2px;
       &.icon-1 {
         background: url("../assets/icon_1.png") no-repeat;
-        background-color: #2c3945;
+        background-color: #2c3945af;
         background-size: 40%;
         background-position: 10px 4px;
       }
       &.icon-2 {
         background: url("../assets/icon_2.png") no-repeat;
-        background-color: #2c3945;
+        background-color: #2c3945af;
         background-size: 40%;
         background-position: 10px 4px;
       }
       &.icon-3 {
         background: url("../assets/icon_3.png") no-repeat;
-        background-color: #2c3945;
+        background-color: #2c3945af;
         background-size: 40%;
         background-position: 10px 4px;
       }
       &.icon-4 {
         background: url("../assets/icon_4.png") no-repeat;
-        background-color: #2c3945;
+        background-color: #2c3945af;
         background-size: 40%;
         background-position: 10px 4px;
       }
       .value {
         font-weight: 600;
         font-size: 14px;
+        // color: #eb6471;
+        color: #aaa;
       }
     }
   }
